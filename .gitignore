@@ -1,0 +1,4 @@
+backend-gestion-financiere/logs/*.log
+backend-gestion-financiere/uploads/
+.env
+.vscode/

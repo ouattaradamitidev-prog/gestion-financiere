@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Nouvelle Transaction - Gestion Financière</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-coins text-green-600 text-2xl mr-3"></i>
+                        <span class="text-xl font-bold text-gray-800">Gestion Financière</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="dashboard.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition">
+                            <i class="fas fa-home mr-1"></i>Tableau de bord
+                        </a>
+                        <a href="mes_transactions.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition">
+                            <i class="fas fa-list mr-1"></i>Mes Transactions
+                        </a>
+                        <a href="transaction_form.html" class="text-green-600 border-b-2 border-green-600 px-3 py-2 text-sm font-medium">
+                            <i class="fas fa-plus-circle mr-1"></i>Nouvelle Transaction
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="profil.html" class="text-gray-700 hover:text-green-600">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </a>
+                    <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm font-medium">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Déconnexion
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu Principal -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- En-tête -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-plus-circle text-green-600 mr-2"></i>Nouvelle Transaction
+            </h1>
+            <p class="text-gray-600">Créez une nouvelle demande de transaction financière</p>
+        </div>
+
+        <!-- Formulaire -->
+        <div class="bg-white rounded-xl shadow-md p-8">
+            <form id="transactionForm" class="space-y-6">
+                <!-- Type de Transaction -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-3">
+                        Type de Transaction <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-2 gap-4">
+                        <label class="relative flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-green-500 transition">
+                            <input type="radio" name="type" value="Entrée" required class="mr-3 text-green-600 focus:ring-green-500">
+                            <div>
+                                <div class="font-medium text-gray-900">
+                                    <i class="fas fa-arrow-down text-green-600 mr-2"></i>Entrée
+                                </div>
+                                <p class="text-sm text-gray-500">Ajout de fonds</p>
+                            </div>
+                        </label>
+                        <label class="relative flex items-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-red-500 transition">
+                            <input type="radio" name="type" value="Sortie" required class="mr-3 text-red-600 focus:ring-red-500">
+                            <div>
+                                <div class="font-medium text-gray-900">
+                                    <i class="fas fa-arrow-up text-red-600 mr-2"></i>Sortie
+                                </div>
+                                <p class="text-sm text-gray-500">Retrait de fonds</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Montant -->
+                <div>
+                    <label for="montant" class="block text-sm font-medium text-gray-700 mb-2">
+                        Montant (FCFA) <span class="text-red-500">*</span>
+                    </label>
+                    <div class="relative">
+                        <span class="absolute left-4 top-3 text-gray-500">FCFA</span>
+                        <input type="number" id="montant" name="montant" required min="1" step="1"
+                            class="w-full pl-16 pr-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                            placeholder="0">
+                    </div>
+                    <p class="mt-1 text-sm text-gray-500">Montant minimum: 1 FCFA</p>
+                </div>
+
+                <!-- Motif -->
+                <div>
+                    <label for="motif" class="block text-sm font-medium text-gray-700 mb-2">
+                        Motif de la Transaction <span class="text-red-500">*</span>
+                    </label>
+                    <textarea id="motif" name="motif" required rows="4" minlength="10"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        placeholder="Décrivez le motif de cette transaction (minimum 10 caractères)"></textarea>
+                    <p class="mt-1 text-sm text-gray-500">
+                        <span id="char-count">0</span>/10 caractères minimum
+                    </p>
+                </div>
+
+                <!-- Date Nécessaire -->
+                <div>
+                    <label for="date_necessaire" class="block text-sm font-medium text-gray-700 mb-2">
+                        Date Nécessaire <span class="text-red-500">*</span>
+                    </label>
+                    <input type="date" id="date_necessaire" name="date_necessaire" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                    <p class="mt-1 text-sm text-gray-500">Date à laquelle vous avez besoin de cette transaction</p>
+                </div>
+
+                <!-- Niveau d'Urgence -->
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-3">
+                        Niveau d'Urgence <span class="text-red-500">*</span>
+                    </label>
+                    <div class="grid grid-cols-3 gap-4">
+                        <label class="relative flex items-center justify-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-green-500 transition">
+                            <input type="radio" name="urgence" value="faible" required class="sr-only">
+                            <div class="text-center">
+                                <i class="fas fa-clock text-green-600 text-2xl mb-2"></i>
+                                <div class="font-medium text-gray-900">Faible</div>
+                                <p class="text-xs text-gray-500">Pas urgent</p>
+                            </div>
+                        </label>
+                        <label class="relative flex items-center justify-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-yellow-500 transition">
+                            <input type="radio" name="urgence" value="normale" required class="sr-only" checked>
+                            <div class="text-center">
+                                <i class="fas fa-clock text-yellow-600 text-2xl mb-2"></i>
+                                <div class="font-medium text-gray-900">Normale</div>
+                                <p class="text-xs text-gray-500">Standard</p>
+                            </div>
+                        </label>
+                        <label class="relative flex items-center justify-center p-4 border-2 border-gray-300 rounded-lg cursor-pointer hover:border-red-500 transition">
+                            <input type="radio" name="urgence" value="elevee" required class="sr-only">
+                            <div class="text-center">
+                                <i class="fas fa-exclamation-triangle text-red-600 text-2xl mb-2"></i>
+                                <div class="font-medium text-gray-900">Élevée</div>
+                                <p class="text-xs text-gray-500">Urgent</p>
+                            </div>
+                        </label>
+                    </div>
+                </div>
+
+                <!-- Boutons -->
+                <div class="flex items-center justify-between pt-6">
+                    <a href="mes_transactions.html" class="text-gray-600 hover:text-gray-800 font-medium">
+                        <i class="fas fa-arrow-left mr-2"></i>Retour
+                    </a>
+                    <div class="space-x-4">
+                        <button type="reset" class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
+                            <i class="fas fa-redo mr-2"></i>Réinitialiser
+                        </button>
+                        <button type="submit" class="px-6 py-3 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition shadow-lg hover:shadow-xl">
+                            <i class="fas fa-check mr-2"></i>Soumettre la Transaction
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <!-- Informations -->
+        <div class="mt-6 bg-blue-50 border border-blue-200 rounded-lg p-4">
+            <div class="flex items-start">
+                <i class="fas fa-info-circle text-blue-600 text-xl mr-3 mt-1"></i>
+                <div>
+                    <h3 class="font-medium text-blue-900 mb-2">Informations Importantes</h3>
+                    <ul class="text-sm text-blue-800 space-y-1">
+                        <li>• Votre transaction sera soumise pour validation par un administrateur</li>
+                        <li>• Vous recevrez une notification une fois la transaction traitée</li>
+                        <li>• Les transactions urgentes sont traitées en priorité</li>
+                        <li>• Assurez-vous que toutes les informations sont correctes avant de soumettre</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Scripts - IMPORTANT: api-config.js DOIT être chargé EN PREMIER -->
+    <script src="../assets/js/api-config.js"></script>
+    <script src="../assets/js/logout.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/notifications.js"></script>
+    <script src="./js/transaction_form.js"></script>
+    <script src="../assets/js/responsive.js"></script>
+
+    <script>
+        // Compteur de caractères pour le motif
+        document.getElementById('motif').addEventListener('input', function() {
+            document.getElementById('char-count').textContent = this.value.length;
+        });
+
+        // Date minimum = aujourd'hui
+        const today = new Date().toISOString().split('T')[0];
+        document.getElementById('date_necessaire').setAttribute('min', today);
+
+        // Style pour les options radio sélectionnées
+        document.querySelectorAll('input[type="radio"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                const parent = this.closest('label');
+                const siblings = parent.parentElement.querySelectorAll('label');
+                siblings.forEach(s => s.classList.remove('border-green-500', 'bg-green-50', 'border-red-500', 'bg-red-50', 'border-yellow-500', 'bg-yellow-50'));
+                
+                if (this.value === 'Entrée') {
+                    parent.classList.add('border-green-500', 'bg-green-50');
+                } else if (this.value === 'Sortie') {
+                    parent.classList.add('border-red-500', 'bg-red-50');
+                } else if (this.name === 'urgence') {
+                    if (this.value === 'faible') parent.classList.add('border-green-500', 'bg-green-50');
+                    if (this.value === 'normale') parent.classList.add('border-yellow-500', 'bg-yellow-50');
+                    if (this.value === 'elevee') parent.classList.add('border-red-500', 'bg-red-50');
+                }
+            });
+        });
+    </script>
+</body>
+</html>

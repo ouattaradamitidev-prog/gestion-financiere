@@ -1,0 +1,98 @@
+# ============================================================
+# FICHIER .HTACCESS
+# À placer dans: backend/.htaccess
+# ============================================================
+# Sécurise le dossier backend et configure Apache
+
+# Activer le moteur de réécriture
+RewriteEngine On
+
+# ============================================================
+# SÉCURITÉ
+# ============================================================
+
+# Empêcher l'affichage du contenu des dossiers
+Options -Indexes
+
+# Bloquer l'accès aux fichiers sensibles
+<FilesMatch "\.(htaccess|htpasswd|ini|log|sh|sql|conf)$">
+    Order Allow,Deny
+    Deny from all
+</FilesMatch>
+
+# Protéger le fichier de configuration de la base de données
+<Files "database.php">
+    Order Allow,Deny
+    Deny from all
+</Files>
+
+# Protection contre les injections
+<IfModule mod_rewrite.c>
+    # Bloquer les tentatives d'injection SQL courantes
+    RewriteCond %{QUERY_STRING} (\<|%3C).*script.*(\>|%3E) [NC,OR]
+    RewriteCond %{QUERY_STRING} GLOBALS(=|\[|\%[0-9A-Z]{0,2}) [OR]
+    RewriteCond %{QUERY_STRING} _REQUEST(=|\[|\%[0-9A-Z]{0,2})
+    RewriteRule ^(.*)$ - [F,L]
+</IfModule>
+
+# ============================================================
+# CORS (À AJUSTER SELON VOS BESOINS)
+# ============================================================
+
+# En développement local, autoriser toutes les origines
+# EN PRODUCTION: Remplacer * par votre domaine exact
+Header set Access-Control-Allow-Origin "*"
+Header set Access-Control-Allow-Methods "GET, POST, PUT, DELETE, OPTIONS"
+Header set Access-Control-Allow-Headers "Content-Type, Authorization"
+
+# ============================================================
+# COMPRESSION ET CACHE
+# ============================================================
+
+# Compression GZIP
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/xml text/css text/javascript application/javascript application/json
+</IfModule>
+
+# Cache des fichiers statiques
+<IfModule mod_expires.c>
+    ExpiresActive On
+    ExpiresByType application/json "access plus 0 seconds"
+</IfModule>
+
+# ============================================================
+# CHARSET
+# ============================================================
+AddDefaultCharset UTF-8
+
+# ============================================================
+# CONFIGURATION PHP (si activé dans votre hébergement)
+# ============================================================
+<IfModule mod_php7.c>
+    # Taille maximale des uploads
+    php_value upload_max_filesize 10M
+    php_value post_max_size 10M
+    
+    # Temps d'exécution
+    php_value max_execution_time 300
+    php_value max_input_time 300
+    
+    # Affichage des erreurs (DÉSACTIVER EN PRODUCTION)
+    php_flag display_errors On
+    php_flag display_startup_errors On
+    php_value error_reporting E_ALL
+    
+    # Session
+    php_value session.cookie_httponly 1
+    php_value session.cookie_secure 0
+    php_value session.use_only_cookies 1
+</IfModule>
+
+# ============================================================
+# NOTES IMPORTANTES:
+# ============================================================
+# 1. Ce fichier doit être dans le dossier backend/
+# 2. En production, désactiver display_errors
+# 3. En production, remplacer Access-Control-Allow-Origin "*" 
+#    par votre domaine exact
+# 4. Vérifier que mod_rewrite est activé sur votre serveur

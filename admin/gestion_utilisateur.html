@@ -1,0 +1,241 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gestion des Utilisateurs - Administrateur</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+    <link rel="stylesheet" href="../assets/css/responsive.css">
+    <link rel="stylesheet" href="../assets/css/tables-responsive.css">
+</head>
+<body class="bg-gray-50">
+    <!-- NAVBAR FIXE RESPONSIVE -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                
+                <!-- Logo -->
+                <div class="flex items-center space-x-2 flex-shrink-0">
+                    <div class="w-10 h-10 bg-gradient-to-r from-green-500 to-green-600 rounded-lg flex items-center justify-center">
+                        <i class="fas fa-coins text-white text-xl"></i>
+                    </div>
+                    <span class="text-xl md:text-2xl font-bold text-gray-800">Gestion Financière</span>
+                </div>
+
+                <!-- Menu Desktop -->
+                <div class="hidden md:flex items-center space-x-4">
+                    <a href="./dashboard_admin.html" class="text-gray-600 hover:text-green-600 transition py-1">
+                         Tableau de bord
+                    </a>
+                    <a href="./validation_admin.html" class="text-gray-600 hover:text-green-600 transition py-1">
+                         Validation
+                    </a>
+                    <a href="./historique.html" class="text-gray-600 hover:text-green-600 transition py-1">
+                         Historique
+                    </a>
+                    <a href="./gestion_utilisateur.html" class="text-green-600 font-semibold">
+                         Utilisateurs
+                    </a>
+                </div>
+
+                <!-- Bouton Déconnexion Desktop -->
+                <div class="hidden md:flex items-center">
+                    <a href="../utilisateur/login.html" class="boutton bg-red-600 text-white px-6 py-2 rounded-lg hover:bg-red-700 transition-colors font-medium shadow-md">
+                         Déconnexion
+                    </a>
+                </div>
+
+                <!-- Bouton Hamburger (Mobile) -->
+                <button id="mobile-menu-btn" class="md:hidden text-gray-700 focus:outline-none p-2">
+                    <i class="fas fa-bars text-xl"></i>
+                </button>
+            </div>
+        </div>
+
+        <!-- Menu Mobile -->
+        <div id="mobile-menu" class="hidden">
+            <div class="px-4 py-3 space-y-1 bg-white shadow-lg">
+                <a href="./dashboard_admin.html" class="block text-gray-700 hover:text-green-600 hover:bg-gray-50 py-3 px-4 rounded-lg">
+                     Tableau de bord
+                </a>
+                <a href="./validation_admin.html" class="block text-gray-700 hover:text-green-600 hover:bg-gray-50 py-3 px-4 rounded-lg">
+                     Validation
+                </a>
+                <a href="./historique.html" class="block text-gray-700 hover:text-green-600 hover:bg-gray-50 py-3 px-4 rounded-lg">
+                     Historique
+                </a>
+                <a href="./gestion_utilisateur.html" class="block text-green-600 font-semibold bg-green-50 py-3 px-4 rounded-lg">
+                     Utilisateurs
+                </a>
+                <a href="../utilisateur/login.html" class="block bg-red-600 text-white px-4 py-3 rounded-lg hover:bg-red-700 text-center mt-2">
+                     Déconnexion
+                </a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="max-w-7xl mx-auto p-6">
+        <div class="flex justify-between items-center mb-6">
+            <h1 class="text-3xl font-bold text-gray-800">
+                <i class="fas fa-users mr-3 text-green-600"></i>Gestion des Utilisateurs
+            </h1>
+            <button onclick="openModal('add')" class="bg-green-500 text-white px-6 py-3 rounded-lg font-semibold hover:bg-green-600 transition shadow-lg flex items-center">
+                <i class="fas fa-user-plus mr-2"></i>Ajouter un utilisateur
+            </button>
+        </div>
+
+        <div id="message" class="mb-6 p-4 rounded-lg hidden"></div>
+
+        <!-- Statistiques -->
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="bg-blue-100 p-3 rounded-full">
+                        <i class="fas fa-users text-blue-600 text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-600 text-sm">Total utilisateurs</p>
+                        <p class="text-2xl font-bold text-gray-800" id="totalUsers">8</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="bg-green-100 p-3 rounded-full">
+                        <i class="fas fa-user-shield text-green-600 text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-600 text-sm">Administrateurs</p>
+                        <p class="text-2xl font-bold text-gray-800" id="totalAdmins">2</p>
+                    </div>
+                </div>
+            </div>
+            <div class="bg-white rounded-lg shadow-md p-6">
+                <div class="flex items-center">
+                    <div class="bg-purple-100 p-3 rounded-full">
+                        <i class="fas fa-user text-purple-600 text-2xl"></i>
+                    </div>
+                    <div class="ml-4">
+                        <p class="text-gray-600 text-sm">Utilisateurs</p>
+                        <p class="text-2xl font-bold text-gray-800" id="totalNormalUsers">6</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Tableau -->
+        <div class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <div class="overflow-x-auto">
+                <table class="w-full">
+                    <thead class="bg-gray-50 border-b border-gray-200">
+                        <tr>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">
+                                <i class="fas fa-hashtag mr-1"></i>ID
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">
+                                <i class="fas fa-user mr-1"></i>Nom
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">
+                                <i class="fas fa-envelope mr-1"></i>Email
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">
+                                <i class="fas fa-phone mr-1"></i>Téléphone
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">
+                                <i class="fas fa-user-tag mr-1"></i>Rôle
+                            </th>
+                            <th class="px-6 py-4 text-left text-xs font-semibold text-gray-600 uppercase">
+                                <i class="fas fa-calendar mr-1"></i>Date création
+                            </th>
+                            <th class="px-6 py-4 text-center text-xs font-semibold text-gray-600 uppercase">
+                                <i class="fas fa-cogs mr-1"></i>Actions
+                            </th>
+                        </tr>
+                    </thead>
+                    <tbody id="usersTable" class="divide-y divide-gray-200">
+                        <!-- Les données seront insérées ici par JavaScript -->
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+                        <!-- Modal Ajouter/Modifier -->
+    <div id="userModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4 max-h-screen overflow-y-auto">
+            <h3 class="text-2xl font-bold text-gray-800 mb-6" id="modalTitle">
+                <i class="fas fa-user-plus mr-2"></i>Ajouter un utilisateur
+            </h3>
+            <form id="userForm" class="space-y-4">
+                <input type="hidden" id="userId">
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user mr-1"></i>Nom complet
+                    </label>
+                    <input type="text" id="userName" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-envelope mr-1"></i>Email
+                    </label>
+                    <input type="email" id="userEmail" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-phone mr-1"></i>Téléphone
+                    </label>
+                    <input type="tel" id="userPhone" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                </div>
+                <div>
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-user-tag mr-1"></i>Rôle
+                    </label>
+                    <select id="userRole" required class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                        <option value="Utilisateur">Utilisateur</option>
+                        <option value="Administrateur">Administrateur</option>
+                    </select>
+                </div>
+                <div id="passwordField">
+                    <label class="block text-sm font-medium text-gray-700 mb-2">
+                        <i class="fas fa-lock mr-1"></i>Mot de passe
+                    </label>
+                    <input type="password" id="userPassword" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500">
+                </div>
+                <div class="flex space-x-4 mt-6">
+                    <button type="button" onclick="closeUserModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg font-semibold hover:bg-gray-400 transition">
+                        <i class="fas fa-times mr-2"></i>Annuler
+                    </button>
+                    <button type="submit" class="flex-1 bg-green-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-green-600 transition">
+                        <i class="fas fa-save mr-2"></i>Enregistrer
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+                            <!-- Modal Confirmation Suppression -->
+    <div id="deleteModal" class="hidden fixed inset-0 bg-black bg-opacity-50 flex items-center justify-center z-50">
+        <div class="bg-white rounded-lg p-8 max-w-md w-full mx-4">
+            <h3 class="text-xl font-bold text-red-600 mb-4">
+                <i class="fas fa-exclamation-triangle mr-2"></i>Confirmer la suppression
+            </h3>
+            <p class="text-gray-600 mb-6">Êtes-vous sûr de vouloir supprimer cet utilisateur ? Cette action est irréversible.</p>
+            <div class="flex space-x-4">
+                <button onclick="closeDeleteModal()" class="flex-1 bg-gray-300 text-gray-700 py-2 px-4 rounded-lg font-semibold hover:bg-gray-400 transition">
+                    <i class="fas fa-times mr-2"></i>Annuler
+                </button>
+                <button onclick="confirmDelete()" class="flex-1 bg-red-500 text-white py-2 px-4 rounded-lg font-semibold hover:bg-red-600 transition">
+                    <i class="fas fa-trash mr-2"></i>Supprimer
+                </button>
+            </div>
+        </div>
+    </div>
+<!-- ----------------------------------- partie des scripts ----------------------------------- -->
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/notifications.js"></script>
+    <script src="./js/gestion_utilisateur.js"></script>
+    <script src="../assets/js/responsive.js"></script>
+</body>
+</html>

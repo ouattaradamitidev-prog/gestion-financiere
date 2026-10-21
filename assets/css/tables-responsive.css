@@ -1,0 +1,379 @@
+/* 
+   RESPONSIVE TABLEAUX - MASQUER ICÔNES SUR MOBILE
+   À ajouter dans responsive.css
+    */
+
+/* 
+   TABLEAUX - ICÔNES RESPONSIVE
+    */
+
+/* Masquer les icônes dans les en-têtes de tableaux sur mobile */
+@media (max-width: 768px) {
+    /* Icônes dans les <th> */
+    table thead th i,
+    table thead th .fas,
+    table thead th .far {
+        display: none;
+    }
+    
+    /* Icônes dans les cellules de données sur tablette */
+    table tbody td i.fa-user-circle,
+    table tbody td i.fa-calendar-alt,
+    table tbody td i.fa-coins {
+        display: none;
+    }
+}
+
+/* Masquer TOUTES les icônes des tableaux sur petits écrans */
+@media (max-width: 640px) {
+    /* Masquer toutes les icônes dans les cellules */
+    table tbody td i,
+    table tbody td .fas,
+    table tbody td .far {
+        display: none;
+    }
+    
+    /* Garder uniquement les icônes dans les badges de statut */
+    table tbody td .px-3.py-1 i,
+    table tbody td span i {
+        display: inline-block;
+    }
+}
+
+/* 
+   TABLEAUX - OPTIMISATION MOBILE
+    */
+
+@media (max-width: 768px) {
+    /* Réduire la taille des cellules */
+    table th,
+    table td {
+        padding: 0.5rem 0.375rem;
+        font-size: 0.8125rem;
+    }
+    
+    /* Réduire la largeur minimale du tableau */
+    table {
+        min-width: 500px;
+    }
+    
+    /* Textes tronqués pour les motifs */
+    table tbody td.max-w-xs {
+        max-width: 150px;
+    }
+}
+
+@media (max-width: 640px) {
+    /* Encore plus compact sur petits écrans */
+    table th,
+    table td {
+        padding: 0.375rem 0.25rem;
+        font-size: 0.75rem;
+    }
+    
+    /* Réduire encore la largeur minimale */
+    table {
+        min-width: 400px;
+    }
+    
+    /* Motifs très courts */
+    table tbody td.max-w-xs {
+        max-width: 100px;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Ultra compact pour très petits écrans */
+    table th,
+    table td {
+        padding: 0.25rem 0.125rem;
+        font-size: 0.6875rem;
+    }
+    
+    table {
+        min-width: 350px;
+    }
+    
+    /* Badges de statut plus petits */
+    table .px-3.py-1 {
+        padding: 0.125rem 0.375rem;
+        font-size: 0.625rem;
+    }
+}
+
+/* 
+   BOUTONS D'ACTIONS DANS TABLEAUX
+    */
+
+@media (max-width: 768px) {
+    /* Réduire la taille des boutons d'action */
+    table button,
+    table a.bg-green-500,
+    table a.bg-red-500,
+    table a.bg-blue-600 {
+        padding: 0.375rem 0.625rem;
+        font-size: 0.75rem;
+    }
+    
+    /* Empiler les boutons verticalement */
+    table .flex.justify-center.space-x-2 {
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+    
+    /* Boutons pleine largeur */
+    table .flex.justify-center.space-x-2 button,
+    table .flex.justify-center.space-x-2 a {
+        width: 100%;
+    }
+}
+
+@media (max-width: 640px) {
+    /* Boutons encore plus compacts */
+    table button,
+    table a.bg-green-500,
+    table a.bg-red-500,
+    table a.bg-blue-600 {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.6875rem;
+    }
+    
+    /* Masquer le texte des boutons, garder uniquement icônes */
+    table button i + *,
+    table a i + * {
+        display: none;
+    }
+    
+    /* Afficher l'icône du bouton */
+    table button i,
+    table a i {
+        display: inline-block;
+        margin: 0;
+    }
+}
+
+/* 
+   STATISTIQUES CARDS RESPONSIVE
+    */
+
+@media (max-width: 640px) {
+    /* Masquer les icônes dans les cards de stats aussi */
+    .bg-white.rounded-lg.shadow-md .bg-yellow-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-green-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-red-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-blue-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-purple-100 i {
+        font-size: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Réduire encore les icônes sur très petits écrans */
+    .bg-white.rounded-lg.shadow-md .bg-yellow-100,
+    .bg-white.rounded-lg.shadow-md .bg-green-100,
+    .bg-white.rounded-lg.shadow-md .bg-red-100,
+    .bg-white.rounded-lg.shadow-md .bg-blue-100,
+    .bg-white.rounded-lg.shadow-md .bg-purple-100 {
+        padding: 0.5rem;
+    }
+    
+    .bg-white.rounded-lg.shadow-md .bg-yellow-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-green-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-red-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-blue-100 i,
+    .bg-white.rounded-lg.shadow-md .bg-purple-100 i {
+        font-size: 1rem;
+    }
+}
+
+/* 
+   TITRES ET EN-TÊTES
+    */
+
+@media (max-width: 640px) {
+    /* Masquer/réduire icônes dans les titres */
+    h1 i,
+    h2 i {
+        font-size: 0.875em;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Masquer complètement certaines icônes de titre */
+    h1 > i.fa-chart-line,
+    h1 > i.fa-users,
+    h1 > i.fa-history,
+    h1 > i.fa-check-circle,
+    h1 > i.fa-list {
+        display: none;
+    }
+}
+
+/* 
+   BOUTON "AJOUTER" RESPONSIVE
+    */
+
+@media (max-width: 640px) {
+    /* Bouton d'ajout en haut de page */
+    .flex.justify-between.items-center a,
+    .flex.justify-between.items-center button {
+        padding: 0.625rem 0.875rem;
+        font-size: 0.875rem;
+    }
+    
+    /* Cacher le texte, garder icône + version courte */
+    .flex.justify-between.items-center a i + *,
+    .flex.justify-between.items-center button i + * {
+        display: none;
+    }
+    
+    /* Ajouter texte court après icône */
+    .flex.justify-between.items-center a::after {
+        content: "Ajouter";
+        margin-left: 0.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Supprimer complètement le texte */
+    .flex.justify-between.items-center a::after {
+        display: none;
+    }
+    
+    /* Bouton avec icône uniquement */
+    .flex.justify-between.items-center a,
+    .flex.justify-between.items-center button {
+        padding: 0.625rem;
+        min-width: 44px;
+    }
+}
+
+/* 
+   FILTRES PAGE HISTORIQUE
+    */
+
+@media (max-width: 768px) {
+    /* Masquer icônes dans les labels de filtres */
+    .bg-white.rounded-lg label i {
+        display: none;
+    }
+}
+
+/* 
+   BADGE COMPTEUR "EN ATTENTE"
+    */
+
+@media (max-width: 640px) {
+    /* Réduire le badge de compteur */
+    .bg-yellow-100.px-4.py-2 {
+        padding: 0.375rem 0.625rem;
+        font-size: 0.8125rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Version encore plus compacte */
+    .bg-yellow-100.px-4.py-2 {
+        padding: 0.25rem 0.5rem;
+        font-size: 0.75rem;
+    }
+    
+    /* Texte court */
+    .bg-yellow-100.px-4.py-2 span {
+        display: none;
+    }
+    
+    .bg-yellow-100.px-4.py-2::after {
+        content: "5";
+    }
+}
+
+/* 
+   SOLDE GLOBAL (DASHBOARD)
+    */
+
+@media (max-width: 640px) {
+    /* Réduire l'icône wallet */
+    .bg-gradient-to-r h2 i {
+        font-size: 1rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Masquer l'icône sur très petits écrans */
+    .bg-gradient-to-r h2 i {
+        display: none;
+    }
+}
+
+/* 
+   LIENS RAPIDES (DASHBOARD)
+    */
+
+@media (max-width: 640px) {
+    /* Réduire les icônes des liens rapides */
+    .md\:grid-cols-3 a .text-2xl {
+        font-size: 1.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    /* Version compacte */
+    .md\:grid-cols-3 a .p-3 {
+        padding: 0.5rem;
+    }
+    
+    .md\:grid-cols-3 a .text-2xl {
+        font-size: 1.25rem;
+    }
+}
+
+/* 
+   OPTIMISATIONS GÉNÉRALES
+    */
+
+/* Garder les icônes importantes visibles */
+@media (max-width: 640px) {
+    /* Icônes de type de transaction (entrée/sortie) */
+    .fa-arrow-up,
+    .fa-arrow-down {
+        display: inline !important;
+    }
+    
+    /* Icônes de statut */
+    .fa-check-circle,
+    .fa-times-circle,
+    .fa-clock {
+        display: inline !important;
+    }
+}
+
+/* 
+   ACCESSIBILITÉ
+    */
+
+/* S'assurer que les boutons restent cliquables */
+@media (max-width: 640px) {
+    table button,
+    table a {
+        min-width: 44px;
+        min-height: 44px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+}
+
+/* 
+   PRINT (ne rien masquer à l'impression)
+    */
+
+@media print {
+    /* Réafficher toutes les icônes pour l'impression */
+    table th i,
+    table td i,
+    h1 i,
+    h2 i {
+        display: inline !important;
+    }
+}

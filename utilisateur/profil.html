@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mon Profil - Gestion Financière</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="stylesheet" href="../assets/css/style.css">
+</head>
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg sticky top-0 z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <div class="flex-shrink-0 flex items-center">
+                        <i class="fas fa-coins text-green-600 text-2xl mr-3"></i>
+                        <span class="text-xl font-bold text-gray-800">Gestion Financière</span>
+                    </div>
+                    <div class="hidden md:ml-6 md:flex md:space-x-8">
+                        <a href="dashboard.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition">
+                            <i class="fas fa-home mr-1"></i>Tableau de bord
+                        </a>
+                        <a href="mes_transactions.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition">
+                            <i class="fas fa-list mr-1"></i>Mes Transactions
+                        </a>
+                        <a href="transaction_form.html" class="text-gray-700 hover:text-green-600 px-3 py-2 text-sm font-medium transition">
+                            <i class="fas fa-plus-circle mr-1"></i>Nouvelle Transaction
+                        </a>
+                    </div>
+                </div>
+                <div class="flex items-center space-x-4">
+                    <a href="profil.html" class="text-green-600">
+                        <i class="fas fa-user-circle text-2xl"></i>
+                    </a>
+                    <button onclick="logout()" class="bg-red-600 text-white px-4 py-2 rounded-lg hover:bg-red-700 transition text-sm font-medium">
+                        <i class="fas fa-sign-out-alt mr-1"></i>Déconnexion
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Contenu Principal -->
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <!-- En-tête -->
+        <div class="mb-8">
+            <h1 class="text-3xl font-bold text-gray-800 mb-2">
+                <i class="fas fa-user-circle text-green-600 mr-2"></i>Mon Profil
+            </h1>
+            <p class="text-gray-600">Gérez vos informations personnelles et votre sécurité</p>
+        </div>
+
+        <!-- Loader -->
+        <div id="profile-loader" class="hidden text-center py-12">
+            <i class="fas fa-spinner fa-spin text-4xl text-green-600 mb-4"></i>
+            <p class="text-gray-600">Chargement du profil...</p>
+        </div>
+
+        <!-- Carte Profil -->
+        <div class="bg-white rounded-xl shadow-md overflow-hidden mb-6">
+            <div class="bg-gradient-to-r from-green-500 to-green-600 h-32"></div>
+            <div class="px-8 pb-8">
+                <div class="flex items-end -mt-16 mb-6">
+                    <div class="w-32 h-32 bg-white rounded-full border-4 border-white shadow-lg flex items-center justify-center">
+                        <i class="fas fa-user text-5xl text-gray-400"></i>
+                    </div>
+                    <div class="ml-6 pb-2">
+                        <h2 class="text-2xl font-bold text-gray-800 user-name">Utilisateur</h2>
+                        <p id="member-since" class="text-gray-600">Membre depuis...</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Formulaire Informations Personnelles -->
+        <div class="bg-white rounded-xl shadow-md p-8 mb-6">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-user-edit text-green-600 mr-2"></i>Informations Personnelles
+            </h2>
+            
+            <form id="profile-form" class="space-y-6">
+                <!-- Identifiant (non modifiable) -->
+                <div>
+                    <label for="username" class="block text-sm font-medium text-gray-700 mb-2">
+                        Identifiant
+                    </label>
+                    <input type="text" id="username" disabled
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed">
+                    <p class="mt-1 text-sm text-gray-500">L'identifiant ne peut pas être modifié</p>
+                </div>
+
+                <!-- Nom -->
+                <div>
+                    <label for="nom" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nom Complet <span class="text-red-500">*</span>
+                    </label>
+                    <input type="text" id="nom" name="nom" required minlength="2"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+
+                <!-- Email -->
+                <div>
+                    <label for="email" class="block text-sm font-medium text-gray-700 mb-2">
+                        Email <span class="text-red-500">*</span>
+                    </label>
+                    <input type="email" id="email" name="email" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent">
+                </div>
+
+                <!-- Rôle (non modifiable) -->
+                <div>
+                    <label for="role" class="block text-sm font-medium text-gray-700 mb-2">
+                        Rôle
+                    </label>
+                    <input type="text" id="role" disabled
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg bg-gray-50 text-gray-500 cursor-not-allowed">
+                </div>
+
+                <!-- Bouton -->
+                <div class="flex justify-end">
+                    <button type="submit"
+                        class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition shadow-lg hover:shadow-xl">
+                        <i class="fas fa-save mr-2"></i>Enregistrer les Modifications
+                    </button>
+                </div>
+            </form>
+        </div>
+
+        <!-- Formulaire Changement de Mot de Passe -->
+        <div class="bg-white rounded-xl shadow-md p-8">
+            <h2 class="text-xl font-bold text-gray-800 mb-6">
+                <i class="fas fa-lock text-green-600 mr-2"></i>Sécurité et Mot de Passe
+            </h2>
+            
+            <form id="password-form" class="space-y-6">
+                <!-- Mot de passe actuel -->
+                <div>
+                    <label for="current-password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Mot de Passe Actuel <span class="text-red-500">*</span>
+                    </label>
+                    <input type="password" id="current-password" required
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        placeholder="••••••••">
+                </div>
+
+                <!-- Nouveau mot de passe -->
+                <div>
+                    <label for="new-password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Nouveau Mot de Passe <span class="text-red-500">*</span>
+                    </label>
+                    <input type="password" id="new-password" required minlength="8"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        placeholder="••••••••">
+                    <p class="mt-1 text-sm text-gray-500">Minimum 8 caractères</p>
+                </div>
+
+                <!-- Confirmer le mot de passe -->
+                <div>
+                    <label for="confirm-password" class="block text-sm font-medium text-gray-700 mb-2">
+                        Confirmer le Mot de Passe <span class="text-red-500">*</span>
+                    </label>
+                    <input type="password" id="confirm-password" required minlength="8"
+                        class="w-full px-4 py-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-green-500 focus:border-transparent"
+                        placeholder="••••••••">
+                    <p id="password-match" class="mt-1 text-sm"></p>
+                </div>
+
+                <!-- Avertissement -->
+                <div class="bg-yellow-50 border border-yellow-200 rounded-lg p-4">
+                    <div class="flex items-start">
+                        <i class="fas fa-exclamation-triangle text-yellow-600 text-xl mr-3 mt-1"></i>
+                        <div class="text-sm text-yellow-800">
+                            <strong>Important:</strong> Après avoir changé votre mot de passe, vous serez déconnecté et devrez vous reconnecter avec votre nouveau mot de passe.
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Boutons -->
+                <div class="flex justify-end space-x-4">
+                    <button type="reset"
+                        class="px-6 py-3 border border-gray-300 rounded-lg text-gray-700 font-medium hover:bg-gray-50 transition">
+                        <i class="fas fa-redo mr-2"></i>Réinitialiser
+                    </button>
+                    <button type="submit"
+                        class="bg-green-600 text-white px-6 py-3 rounded-lg font-medium hover:bg-green-700 transition shadow-lg hover:shadow-xl">
+                        <i class="fas fa-key mr-2"></i>Changer le Mot de Passe
+                    </button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Scripts - IMPORTANT: api-config.js DOIT être chargé EN PREMIER -->
+    <script src="../assets/js/api-config.js"></script>
+    <script src="../assets/js/logout.js"></script>
+    <script src="../assets/js/main.js"></script>
+    <script src="../assets/js/notifications.js"></script>
+    <script src="./js/profil.js"></script>
+    <script src="../assets/js/responsive.js"></script>
+</body>
+</html>
